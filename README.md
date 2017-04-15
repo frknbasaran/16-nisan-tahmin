@@ -7,6 +7,7 @@
 Tahmin belirleme sırasında kullandığım range inputu şuradan bulabilirsiniz. 
 https://codepen.io/juanbrujo/pen/uIqaw
 
+![](https://image.ibb.co/hJJeLk/rsz_img_0529.png)
 
 
 
