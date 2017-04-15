@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    unless user == null
+        center
+            h1 #{user.name}'ın Referandum Tahmini
+    else
+        center
+            img(src='images/logo.jpg',style='margin-top:75px;margin-bottom:25px').logo
+            h1 16 Nisan Anayasa Referandumu için bir tahminde bulun
+            p Her kullanıcının tek bir tahmin hakkı olduğundan Gönder tuşuna basmadan önce doğru yüzdeleri seçtiğinden emin olmalısın. Tahminini gönderdikten sonra değiştiremezsin.
+            p Şimdiye kadar toplam #{total} kişi tahminde bulundu.
+    .container
+        unless user == null
+            unless user.bet.yes
+                form(action='/update-bet', method='post')
+                    center
+                        h1 EVET
+                    .valueYES.value 0
+                    input.yes(type='range',name='yes', min='0', max='100', step='1', value='0')
+                    center
+                        h1 HAYIR
+                    .valueNO.value 0
+                    input.no(type='range',name='no', min='0', max='100', step='1', value='0')
+                    .clearfix
+                    .row
+                        .col-md-6.col-xs-6.col-lg-3.col-lg-offset-3(style='text-align:center')
+                            a(href='/logout')
+                                button.btn.btn-exit(style='margin-top:20px') Çıkış
+                        .col-md-6.col-xs-6.col-lg-3(style='text-align:center')
+                            input.btn.sendButton(type='submit', value='Gönder', style='margin-top:20px')
+            else
+                center
+                    h1 EVET
+                .valueYES.value #{user.bet.yes}
+                center
+                    h1 HAYIR
+                .valueNO.value #{user.bet.no}
+                .row
+                    .col-md-6.col-xs-6.col-lg-3.col-lg-offset-3(style='text-align:center')
+                        a(href='https://twitter.com/home?status=Referandum%20i%C3%A7in%20tahminim%20Evet%3A%20#{user.bet.yes}%25,%20Hay%C4%B1r%3A%20#{user.bet.no}%25.%20Sen%20de%20bir%20tahminde%20bulun%3A%20http%3A//bit.ly/referandum-tahmin')
+                            button.btn.btn-share Twitter'da Paylaş
+                    .col-md-6.col-xs-6.col-lg-3(style='text-align:center')
+                        a(href='/logout')
+                            button.btn.btn-exit Çıkış
+        else
+            center
+                a(href='/auth/twitter')
+                    button.btn.twitter-button Twitter ile Giriş Yap
+        hr
+        center
+            h3 Son 5 Tahmin
+            ul.list-group(style='width:75%')
+                - each user in users
+                li.list-group-item @#{user.nick} / %#{user.bet.yes} EVET, %#{user.bet.no} HAYIR
+        footer(style='margin-top:25px')
+            center
+                p Herhangi bir siyasi kurum ya da kişi ile bağlantısı yoktur.
+      
+  
